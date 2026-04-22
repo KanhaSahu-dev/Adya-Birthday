@@ -1423,5 +1423,47 @@ function initPolaroids(){
   trim();
 })();
 </script>
+  <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const audio = document.getElementById("birthday-audio");
+  const fab   = document.getElementById("musicFab");
+  const icon  = document.getElementById("musicFabIcon");
+  const title = document.getElementById("musicFabTitle");
+  const sub   = document.getElementById("musicFabSub");
+
+  let isPlaying = false;
+
+  // Mobile permission for audio
+  document.body.addEventListener("touchstart", () => {
+    audio.load();
+  }, { once: true });
+
+  fab.addEventListener("click", function () {
+
+    if (!isPlaying) {
+      audio.play().then(() => {
+        isPlaying = true;
+        icon.textContent = "❚❚";
+        title.textContent = "Stop birthday song";
+        sub.textContent = "Tap to stop";
+        fab.classList.add("playing");
+        fab.setAttribute("aria-pressed", "true");
+      }).catch(()=>{});
+    } else {
+      audio.pause();
+      audio.currentTime = 0;
+      isPlaying = false;
+      icon.textContent = "♫";
+      title.textContent = "Play birthday song";
+      sub.textContent = "Tap to play";
+      fab.classList.remove("playing");
+      fab.setAttribute("aria-pressed", "false");
+    }
+
+  });
+
+});
+</script>
 </body>
 </html>
